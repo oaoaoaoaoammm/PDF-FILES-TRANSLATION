@@ -20,15 +20,6 @@ def is_numeric(text):
     """
     return text.replace('.', '', 1).isdigit()
 
-def get_font_size(block):
-    """
-    Extract the font size from a text block.
-    :param block: The text block from which to extract the font size.
-    :return: The font size.
-    """
-    font_info = block[3]
-    font_size = font_info.split(',')[0].split(':')[1].strip()
-    return float(font_size)
 
 def translate_pdf_text(pdf_path, output_path, dest_language):
     """
