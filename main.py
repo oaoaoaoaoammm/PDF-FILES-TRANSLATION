@@ -1,0 +1,86 @@
+import os
+import fitz  # PyMuPDF
+from deep_translator import GoogleTranslator
+
+def translate_text(text, dest_language):
+    """
+    Translate the given text to the specified language.
+    :param text: The text to be translated.
+    :param dest_language: The target language for translation.
+    :return: Translated text.
+    """
+    translator = GoogleTranslator(source='auto', target=dest_language)
+    return translator.translate(text)
+
+def is_numeric(text):
+    """
+    Check if the given text is numeric.
+    :param text: The text to check.
+    :return: True if the text is numeric, False otherwise.
+    """
+    return text.replace('.', '', 1).isdigit()
+
+def get_font_size(block):
+    """
+    Extract the font size from a text block.
+    :param block: The text block from which to extract the font size.
+    :return: The font size.
+    """
+    font_info = block[3]
+    font_size = font_info.split(',')[0].split(':')[1].strip()
+    return float(font_size)
+
+def translate_pdf_text(pdf_path, output_path, dest_language):
+    """
+    Translate the text in the PDF file while preserving the structure and layout.
+    :param pdf_path: Path to the original PDF file.
+    :param output_path: Path to save the translated PDF file.
+    :param dest_language: Target language for translation.
+    """
+    doc = fitz.open(pdf_path)
+    for page_num in range(len(doc)):
+        page = doc.load_page(page_num)
+        blocks = page.get_text("dict")["blocks"]
+
+        for block in blocks:
+            if block["type"] == 0:  # Check if it's a text block
+                for line in block["lines"]:
+                    for span in line["spans"]:
+                        original_text = span["text"].strip()
+                        if is_numeric(original_text):
+                            continue  # Skip numeric text blocks
+
+                        translated_text = translate_text(original_text, dest_language)
+                        rect = fitz.Rect(span["bbox"])  # Get the coordinates of the text span
+                        font_size = span["size"]
+
+                        # Draw a white rectangle to cover the old text
+                        page.draw_rect(rect, color=(1, 1, 1), fill=(1, 1, 1))
+
+                        # Insert the new text at the same coordinates
+                        page.insert_text(rect.tl, translated_text, fontsize=font_size, fontname="helv")
+
+    doc.save(output_path, garbage=3, deflate=True)
+    doc.close()
+
+def translate_pdf_files_in_folder(folder_path, dest_language):
+    """
+    Translate all PDF files in the specified folder.
+    :param folder_path: Path to the folder containing PDF files.
+    :param dest_language: Target language for translation.
+    """
+    output_folder = os.path.join(folder_path, "translated_pdfs")
+    os.makedirs(output_folder, exist_ok=True)
+
+    for filename in os.listdir(folder_path):
+        if filename.endswith(".pdf"):
+            pdf_path = os.path.join(folder_path, filename)
+            translated_filename = translate_text(filename.replace(".pdf", ""), dest_language) + ".pdf"
+            output_path = os.path.join(output_folder, translated_filename)
+
+            translate_pdf_text(pdf_path, output_path, dest_language)
+            print(f"Translated {filename} to {translated_filename}")
+
+# Example usage
+folder_path = "./pdf_files"
+translate_pdf_files_in_folder(folder_path, dest_language="en")
