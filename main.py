@@ -54,7 +54,7 @@ def translate_pdf_text(pdf_path, output_path, dest_language, font_path):
                         # Insert the new text at the same coordinates
                         try:
                             if font_path:
-                                page.insert_text(rect.tl, translated_text, fontsize=font_size, fontfile=font_path)
+                                page.insert_text(rect.tl, translated_text, fontsize=font_size, fontfile=font_path, fontname="china-ss")
                             else:
                                 page.insert_text(rect.tl, translated_text, fontsize=font_size, fontname="helv")
                         except Exception as e:
@@ -83,4 +83,4 @@ def translate_pdf_files_in_folder(folder_path, dest_language, font_path):
 
 # Example usage
 folder_path = "./pdf_files"
-translate_pdf_files_in_folder(folder_path, dest_language="zh-CN", font_path="fonts/NotoSans_CJK_Light.otf")
+translate_pdf_files_in_folder(folder_path, dest_language="zh-CN", font_path="./fonts/NotoSansSC-Light.ttf")
