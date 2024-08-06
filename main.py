@@ -9,8 +9,12 @@ def translate_text(text, dest_language):
     :param dest_language: The target language for translation.
     :return: Translated text.
     """
-    translator = GoogleTranslator(source='auto', target=dest_language)
-    return translator.translate(text)
+    try:
+        translator = GoogleTranslator(source='auto', target=dest_language)
+        return translator.translate(text)
+    except Exception as e:
+        print(f"Error translating text '{text}': {e}")
+        return text
 
 def is_numeric(text):
     """
@@ -20,8 +24,7 @@ def is_numeric(text):
     """
     return text.replace('.', '', 1).isdigit()
 
-
-def translate_pdf_text(pdf_path, output_path, dest_language):
+def translate_pdf_text(pdf_path, output_path, dest_language, font_path):
     """
     Translate the text in the PDF file while preserving the structure and layout.
     :param pdf_path: Path to the original PDF file.
@@ -49,12 +52,18 @@ def translate_pdf_text(pdf_path, output_path, dest_language):
                         page.draw_rect(rect, color=(1, 1, 1), fill=(1, 1, 1))
 
                         # Insert the new text at the same coordinates
-                        page.insert_text(rect.tl, translated_text, fontsize=font_size, fontname="helv")
+                        try:
+                            if font_path:
+                                page.insert_text(rect.tl, translated_text, fontsize=font_size, fontfile=font_path)
+                            else:
+                                page.insert_text(rect.tl, translated_text, fontsize=font_size, fontname="helv")
+                        except Exception as e:
+                            print(f"Error inserting text '{translated_text}': {e}")
 
     doc.save(output_path, garbage=3, deflate=True)
     doc.close()
 
-def translate_pdf_files_in_folder(folder_path, dest_language):
+def translate_pdf_files_in_folder(folder_path, dest_language, font_path):
     """
     Translate all PDF files in the specified folder.
     :param folder_path: Path to the folder containing PDF files.
@@ -69,9 +78,9 @@ def translate_pdf_files_in_folder(folder_path, dest_language):
             translated_filename = translate_text(filename.replace(".pdf", ""), dest_language) + ".pdf"
             output_path = os.path.join(output_folder, translated_filename)
 
-            translate_pdf_text(pdf_path, output_path, dest_language)
+            translate_pdf_text(pdf_path, output_path, dest_language, font_path)
             print(f"Translated {filename} to {translated_filename}")
 
 # Example usage
 folder_path = "./pdf_files"
-translate_pdf_files_in_folder(folder_path, dest_language="en")
+translate_pdf_files_in_folder(folder_path, dest_language="zh-CN", font_path="fonts/NotoSans_CJK_Light.otf")
