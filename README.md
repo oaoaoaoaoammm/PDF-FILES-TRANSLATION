@@ -20,7 +20,7 @@ Change ```dest_language``` to any which you need:
 
 https://github.com/oaoaoaoaoammm/PDF-FILES-TRANSLATION/blob/16cff1fbe5485d8524ecf408a260ca0cbe053cfc/main.py#L86
 
-If you don't want to use chinese, you should remove ```font_path="./fonts/NotoSansSC-Light.ttf"```
+If you don't want to use chinese, you should change ```font_path="./fonts/NotoSansSC-Light.ttf"``` to ```font_path=None```
 
 4. enjoy
 
