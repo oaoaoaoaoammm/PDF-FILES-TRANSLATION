@@ -11,9 +11,11 @@ def translate_text(text, dest_language):
     """
     try:
         translator = GoogleTranslator(source='auto', target=dest_language)
-        return translator.translate(text)
+        translated =  translator.translate(text)
+        print(translated)
+        return translated
     except Exception as e:
-        print(f"Error translating text '{text}': {e}")
+        print(f"\n\nError translating text '{text}': {e}\n\n")
         return text
 
 def is_numeric(text):
@@ -58,7 +60,7 @@ def translate_pdf_text(pdf_path, output_path, dest_language, font_path):
                             else:
                                 page.insert_text(rect.tl, translated_text, fontsize=font_size, fontname="helv")
                         except Exception as e:
-                            print(f"Error inserting text '{translated_text}': {e}")
+                            print(f"\n\nError inserting text '{translated_text}': {e}\n\n")
 
     doc.save(output_path, garbage=3, deflate=True)
     doc.close()
@@ -79,7 +81,7 @@ def translate_pdf_files_in_folder(folder_path, dest_language, font_path):
             output_path = os.path.join(output_folder, translated_filename)
 
             translate_pdf_text(pdf_path, output_path, dest_language, font_path)
-            print(f"Translated {filename} to {translated_filename}")
+            print(f"\n\n Translated {filename} to {translated_filename} \n\n")
 
 # Example usage
 folder_path = "./pdf_files"
