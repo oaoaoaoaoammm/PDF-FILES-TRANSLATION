@@ -10,9 +10,15 @@ Since I have been working with China, I need to translate text in pdf files, on 
 2. ```pip install -r requirements.txt``` in terminal where u saved files from 1.
 3. then edit [```main.py```](https://github.com/oaoaoaoaoammm/PDF-FILES-TRANSLATION/blob/main/main.py):
    
-You can [add](https://github.com/oaoaoaoaoammm/PDF-FILES-TRANSLATION/blob/1f67cbc7f3ad6d599ac4f941c4aca0c6199f64a9/main.py#L76) folder or [change](https://github.com/oaoaoaoaoammm/PDF-FILES-TRANSLATION/blob/1f67cbc7f3ad6d599ac4f941c4aca0c6199f64a9/main.py#L76)(i just add in same directory, because in ./pdf_files **will be created** directory _translated_pdfs_)
+You can [add](https://github.com/oaoaoaoaoammm/PDF-FILES-TRANSLATION/blob/16cff1fbe5485d8524ecf408a260ca0cbe053cfc/main.py#L72) folder or [change](https://github.com/oaoaoaoaoammm/PDF-FILES-TRANSLATION/blob/16cff1fbe5485d8524ecf408a260ca0cbe053cfc/main.py#L72) it (i just add in same directory, because in ./pdf_files **will be created** directory _translated_pdfs_)  
 
-[```translate_pdf_files_in_folder(folder_path, dest_language="en")```](https://github.com/oaoaoaoaoammm/PDF-FILES-TRANSLATION/blob/1f67cbc7f3ad6d599ac4f941c4aca0c6199f64a9/main.py#L77) change ```dest_language``` to any which you need.
+https://github.com/oaoaoaoaoammm/PDF-FILES-TRANSLATION/blob/16cff1fbe5485d8524ecf408a260ca0cbe053cfc/main.py#L72
+
+Change ```dest_language``` to any which you need.
+
+https://github.com/oaoaoaoaoammm/PDF-FILES-TRANSLATION/blob/16cff1fbe5485d8524ecf408a260ca0cbe053cfc/main.py#L86
+
+If you don't want to use chinese, you should remove ```font_path="./fonts/NotoSansSC-Light.ttf"```
 
 4. enjoy
 
