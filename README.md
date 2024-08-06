@@ -2,6 +2,10 @@
 Since I have been working with China, I need to translate text in pdf files, on drawings, without affecting other elements and their shifts
 
 ## How to use?
+
+**Google translate has limit 200k requiests per day, consider it!**
+
+
 1. download [```main.py```](https://github.com/oaoaoaoaoammm/PDF-FILES-TRANSLATION/blob/main/main.py) and [```requirements.txt```](https://github.com/oaoaoaoaoammm/PDF-FILES-TRANSLATION/blob/main/requirements.txt)
 2. ```pip install -r requirements.txt``` in terminal where u saved files from 1.
 3. then edit [```main.py```](https://github.com/oaoaoaoaoammm/PDF-FILES-TRANSLATION/blob/main/main.py):
